@@ -1,5 +1,14 @@
+To upload
+
 git add .
 git status
-git commit -m "day11"
-git remote add origin https://github.com/omkar1610/dfslab.git
+git commit -m "Comment"
+git remote add origin https://github.com/omkar1610/dfslabServer.git
 git push origin master
+
+
+To Pull
+
+cd dfslab/
+git remote add origin https://github.com/omkar1610/dfslabServer.git
+git pull origin master
