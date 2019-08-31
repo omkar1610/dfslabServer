@@ -1,6 +1,7 @@
 /* C program for allocating and deallocating memories. */
 
 #include<stdio.h>
+#include <stdlib.h>
 
 int main(){
 	char *ptr;
