@@ -15,7 +15,7 @@ int main(){
 		if(printf("(Santa)")- --flag)
 			printf("(Banta)");
 		else
-			printf("(Santa)");
+			printf("(SANTA)");
 	}
 	return 0;
 }
