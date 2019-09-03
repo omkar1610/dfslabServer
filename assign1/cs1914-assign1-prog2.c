@@ -6,6 +6,7 @@
 
 #define COPY_REALLOC {\
 	copy(result,SIZE, ptr);\
+	printf("\nREALLOC : %d loc\n", maxpartloc+1);\
 	ptr = (int **)realloc(ptr, (1+maxpartloc)*sizeof(int *));\
 	ptr[maxpartloc] = (int *)malloc((1+SIZE)*sizeof(int));\
 }
@@ -130,7 +131,10 @@ int main()
 	for(i=0;i<maxpartloc;i++)
 	{
 		printpart(ptr[i],data,SIZE);
+		free(ptr[i]);
 		printf("\n");
 	}
 	printf("%d\n", max_and);	
+	free(ptr[i]);
+	free(ptr);free(result);free(data);
 }
