@@ -1,14 +1,9 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include<limits.h>
+#include <limits.h>
 #define MAX(x,y) (((x)>(y))?(x):(y))
 
-#define COPY_REALLOC {\
-	copy(result,SIZE, ptr);\
-	ptr = (int **)realloc(ptr, (1+maxpartloc)*sizeof(int *));\
-	ptr[maxpartloc] = (int *)malloc((1+SIZE)*sizeof(int));\
-}
 
 int i,**ptr; //iterator to be used in every function
 int maxpartloc = 0;
@@ -70,23 +65,32 @@ void part(int curr, int max,int *result, int data[], int SIZE)
 	if(curr == SIZE)
 	{
 		result[curr] = max;
-		int curr_and = compute_xor_and(result,data,SIZE);
+		int curr_and = compute_xor_and(result,data,SIZE);;
 
 		if(max_and == curr_and)
-			COPY_REALLOC
+		{
+			copy(result,SIZE, ptr);
+			printf("\nREALLOC : %d loc\n", maxpartloc+1);
+			ptr = (int **)realloc(ptr, (1+maxpartloc)*sizeof(int *));
+			ptr[maxpartloc] = (int *)malloc((1+SIZE)*sizeof(int));
+		}
 
 		else if(max_and < curr_and)
 		{
-			for(i=0;i<=maxpartloc;i++)	free(ptr[i]);
+			printf("!1\n");
+			for(i=0;i<=maxpartloc;i++)				free(ptr[i]);
+			
 			max_and = curr_and; maxpartloc = 0;
-			COPY_REALLOC
+			copy(result,SIZE, ptr);
+			printf("\nREALLOC : %d loc\n", maxpartloc+1);
+			ptr = (int **)realloc(ptr, (1+maxpartloc)*sizeof(int *));
+			ptr[maxpartloc] = (int *)malloc((1+SIZE)*sizeof(int));
 		}
 	}
 
 	else
 	{
-		int i;
-		for(i=1;i<=max+1;i++)
+		for(int i=1;i<=max+1;i++)
 		{
 			result[curr+1] = i;
 			if(curr+1 ==SIZE)
