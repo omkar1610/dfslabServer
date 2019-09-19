@@ -96,8 +96,8 @@ int main()
 	HEAP heap; HEAP *h = &heap;
 	initHeap(h, sizeof(NODE),  compare_node);
 	NODE node;
-	char c;float x;
-	node.c = 'u'; node.value = 0.8; insert(h, &node);
+	char c, tmp;float x;
+	/*node.c = 'u'; node.value = 0.8; insert(h, &node);
 	node.c = 'v'; node.value = 0.8; insert(h, &node);
 	node.c = 'w'; node.value = 0.5; insert(h, &node);
 	node.c = 'x'; node.value = 0.5; insert(h, &node);
@@ -106,9 +106,12 @@ int main()
 	node.c = 'a'; node.value = 0.3; insert(h, &node);
 	node.c = 'b'; node.value = 0.2; insert(h, &node);
 	node.c = 'c'; node.value = 0.1; insert(h, &node);
-	//showArrFloat(h);
-	prog1(h);
-	//showArrFloat(h);
-
+	prog1(h);*/
+	printf("Enter $$ to stop \n");
+	
+	while(scanf("%c%f%c",&node.c,&node.value,&tmp) == 3 && tmp == '\n')
+		insert(h1, &node);
+	
+	prog1(h1);
 	return 0;
 }
