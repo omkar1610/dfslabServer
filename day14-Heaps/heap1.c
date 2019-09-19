@@ -95,6 +95,7 @@ int main()
 {
 	HEAP heap; HEAP *h = &heap;
 	initHeap(h, sizeof(NODE),  compare_node);
+	
 	NODE node;
 	char c, tmp;float x;
 	/*node.c = 'u'; node.value = 0.8; insert(h, &node);
@@ -110,8 +111,8 @@ int main()
 	printf("Enter $$ to stop \n");
 	
 	while(scanf("%c%f%c",&node.c,&node.value,&tmp) == 3 && tmp == '\n')
-		insert(h1, &node);
+		insert(h, &node);
 	
-	prog1(h1);
+	prog1(h);
 	return 0;
 }

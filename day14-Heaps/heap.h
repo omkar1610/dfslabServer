@@ -106,6 +106,11 @@ void deleteMax(HEAP *h, void *max)
 	return;
 }
 
+void FREE(HEAP *h)
+{
+	free(h->array);
+}
+
 //Extra Functions
 
 static int compare_int(void *array, int i1, int i2)
@@ -159,4 +164,32 @@ static int compare_node(void *array, int i1, int i2)//1st program
 	// Pick up the element at index i2
 	float n2 = (*((NODE *) array + i2)).value;
 	return (n1 - n2)<0?-1:(n1==n2?0:1);
+}
+
+
+//2nd Prog/////////////////////////////
+///////////////////////////////////////
+typedef struct{
+	int x, y;
+	char *value;
+}node2d;
+
+static int compare_str_int(void *array, int i1, int i2)//1st program
+{
+	// Pick up the element at index i1
+	char *ele = ((*((node2d *) array + i1)).value);
+	int n1 = atoi(ele);
+	ele = ((*((node2d *) array + i2)).value);
+	int n2 = atoi(ele);
+	return (-n1 + n2);
+}
+void showArrStr(HEAP *h)
+{
+	printf("HEAP : ");
+	for(int i = 1; i<=h->num_used;i++)
+	{
+		char *ele = ((*((node2d *) h->array + i)).value);
+		printf("%s ", ele);
+	}
+	printf("\n");
 }
