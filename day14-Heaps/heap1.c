@@ -24,105 +24,91 @@ void deleteMax(HEAP *h, void *max)
 static int compare_int(void *array, int i1, int i2)
 */
 
-void showArrInt(HEAP *h)
-{
-	printf("HEAP : ");
-	for(int i = 1; i<=h->num_used;i++)
-	{
-		int *ele = (int*)(h->array + i * h->element_size);
-		printf("%d ", *ele);
-	}
-	printf("\n");
-}
-
-void showArrFloat(HEAP *h)
-{
-	printf("HEAP : ");
-	for(int i = 1; i<=h->num_used;i++)
-	{
-		float *ele = (float*)(h->array + i * h->element_size);
-		printf("%0.2f ", *ele);
-	}
-	printf("\n");
-}
 
 void prog1(HEAP *h)
 {
-	float m1, m2, m3;
-
-	float *arr = malloc(sizeof(int) * h->num_used); int i;
-	deleteMax(h, &m1);
-	deleteMax(h, &m2);
-	deleteMax(h, &m3);
-	if(m1 == m2)
+	NODE m1, m2, m3;
+	NODE *arr = malloc(sizeof(NODE) * h->num_used); 
+	
+	int i = 0, flag;
+	deleteMax(h, &m1); deleteMax(h, &m2); deleteMax(h, &m3);
+	//printf("%c(%0.2f) %c(%0.2f) %c(%0.2f)\n", m1.c, m1.value, m2.c, m2.value,m3.c, m3.value);
+	if(m1.value == m2.value)
 	{		
-		if(m2 == m3)
+		if(m2.value == m3.value)//Array of {m1}
 		{
-			printf("h1\n");
-			//Array of {m1}
-			i = 0;
-			arr[i++] = m1;
-			arr[i++] = m2;
-			arr[i++] = m3;
+			flag = 1;arr[i++] = m1; arr[i++] = m2; arr[i++] = m3;
 		}
-		else if(m2 != m3)
+		else//Array of {m1, m2}  {m3 array}
 		{
-			printf("h2\n");
-			//Array of {m1, m2}  {m3 array}
-			i = 0;
-			arr[i++] = m3;
+			flag = 2;arr[i++] = m3;
 		}
 	}
-	else if(m1 != m2)
+	else
 	{
-		if(m2 == m3)
+		if(m2.value == m3.value)//Array of {m1}  {m2, m3 array}
 		{
-			printf("h3\n");
-			//Array of {m1}  {m2, m3 array}
-			i = 0;
-			arr[i++] = m2;
-			arr[i++] = m3;
+			flag = 3;arr[i++] = m2; arr[i++] = m3;
 		}
-		else if(m2 != m3)
+		else//Array of {m1} {m2}  {m3 array}
 		{
-			printf("h4\n");
-			//Array of {m1} {m2}  {m3 array}
-			i = 0;
-			arr[i++] = m3;
+			flag = 4;arr[i++] = m3;
 		}
 	}
 	//keep on getting till you get same as m3
-	showArrFloat(h);
+	//showArrNODE(h);
 
-	float tmp = m3;
-	while(tmp == m3)
+	NODE tmp = m3;
+	while(h->num_used != 0 && tmp.value == m3.value)
 	{
 		deleteMax(h, &tmp);
-		if(tmp == m3)
+		if(tmp.value == m3.value)
 			arr[i++] = tmp;
 	}
 	insert(h, &tmp);
-	for(int J = 0; J<i;J++)
-		printf("%0.2f",arr[J] );printf("\n");
 
+
+	//PRINTING THE COMBINATIONS
+	//###########################
+	if(flag == 1)//1st Case//Array of {m1}
+		for(int j = 0; j<i-2;j++)
+			for(int k = j+1; k<i-1;k++)
+				for(int l = k+1; l<i;l++)
+					printf("%c(%0.2f) %c(%0.2f) %c(%0.2f)\n", arr[j].c, arr[j].value, arr[k].c, arr[k].value, arr[l].c, arr[l].value); //nC3
+	
+	else if(flag == 2)//2nd CaseArray of {m1, m2}  {m3 array}
+		for(int j = 0; j<i;j++)
+			printf("%c(%0.2f) %c(%0.2f) %c(%0.2f)\n", m1.c, m1.value, m2.c, m2.value, arr[j].c, arr[j].value);
+	
+	else if(flag == 3)//3rd CaseArray of {m1}  {m2, m3 array}
+		for(int k = 0; k<i-1;k++)
+			for(int l = k+1; l<i;l++)
+				printf("%c(%0.2f) %c(%0.2f) %c(%0.2f)\n", m1.c, m1.value, arr[k].c, arr[k].value, arr[l].c, arr[l].value);
+	
+	else//4th CaseArray of {m1} {m2}  {m3 array}
+		for(int j = 1; j<i;j++)
+			printf("%c(%0.2f) %c(%0.2f) %c(%0.2f)\n", m1.c, m1.value, m2.c, m2.value, arr[j].c, arr[j].value);
 }
 
 
 int main()
 {
 	HEAP heap; HEAP *h = &heap;
-	initHeap(h, sizeof(float),  compare_float);
-	
-	float x = 0.5; insert(h, &x);
-	x = 0.3; insert(h, &x);
-	x = 0.3; insert(h, &x);
-	x = 0.1; insert(h, &x);
-	x = 0.8; insert(h, &x);
-	x = 0.2; insert(h, &x);
-	x = 0.3; insert(h, &x);
-	showArrFloat(h);
+	initHeap(h, sizeof(NODE),  compare_node);
+	NODE node;
+	char c;float x;
+	node.c = 'u'; node.value = 0.8; insert(h, &node);
+	node.c = 'v'; node.value = 0.8; insert(h, &node);
+	node.c = 'w'; node.value = 0.5; insert(h, &node);
+	node.c = 'x'; node.value = 0.5; insert(h, &node);
+	node.c = 'y'; node.value = 0.5; insert(h, &node);
+	node.c = 'z'; node.value = 0.5; insert(h, &node);
+	node.c = 'a'; node.value = 0.3; insert(h, &node);
+	node.c = 'b'; node.value = 0.2; insert(h, &node);
+	node.c = 'c'; node.value = 0.1; insert(h, &node);
+	//showArrFloat(h);
 	prog1(h);
-	showArrFloat(h);
+	//showArrFloat(h);
 
 	return 0;
 }

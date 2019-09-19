@@ -106,6 +106,7 @@ void deleteMax(HEAP *h, void *max)
 	return;
 }
 
+//Extra Functions
 
 static int compare_int(void *array, int i1, int i2)
 {
@@ -115,6 +116,17 @@ static int compare_int(void *array, int i1, int i2)
 	int n2 = *((int *) array + i2);
 	return (n1 - n2);
 }
+void showArrInt(HEAP *h)
+{
+	printf("HEAP : ");
+	for(int i = 1; i<=h->num_used;i++)
+	{
+		int *ele = (int*)(h->array + i * h->element_size);
+		printf("%d ", *ele);
+	}
+	printf("\n");
+}
+
 
 static int compare_float(void *array, int i1, int i2)
 {
@@ -122,5 +134,29 @@ static int compare_float(void *array, int i1, int i2)
 	float n1 = *((float *) array + i1);
 	// Pick up the element at index i2
 	float n2 = *((float *) array + i2);
+	return (n1 - n2)<0?-1:(n1==n2?0:1);
+}
+
+void showArrFloat(HEAP *h)
+{
+	printf("HEAP : ");
+	for(int i = 1; i<=h->num_used;i++)
+	{
+		float *ele = (float*)(h->array + i * h->element_size);
+		printf("%0.2f ", *ele);
+	}
+	printf("\n");
+}
+//P.1////////////////////////////////////////////////////////////
+typedef struct{
+	char c; float value;
+}NODE;
+
+static int compare_node(void *array, int i1, int i2)//1st program
+{
+	// Pick up the element at index i1
+	float n1 = (*((NODE *) array + i1)).value;
+	// Pick up the element at index i2
+	float n2 = (*((NODE *) array + i2)).value;
 	return (n1 - n2)<0?-1:(n1==n2?0:1);
 }
