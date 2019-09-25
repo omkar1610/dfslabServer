@@ -1,0 +1,4 @@
+gcc -c justBinaryTree.c
+gcc -c stack.c
+gcc jabt.c justBinaryTree.o stack.o
+./a.out

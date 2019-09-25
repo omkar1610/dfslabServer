@@ -1,3 +1,7 @@
 gcc -c sort.c //Only compilation not linking(no main func here)
 				//generate sort.o
 gcc tester.c sort.o Then Done
+
+
+gcc -c stack.c
+gcc stack_tester.c stack.o
