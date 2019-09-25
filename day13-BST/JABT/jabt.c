@@ -1,5 +1,5 @@
 #include "justBinaryTree.h"
-#include "/home/omkar/Documents/dfslabServer/day10-Function pointers; generic stacks/stack.h"
+#include "stack.h"
 
 typedef struct{
 	int data;
@@ -10,31 +10,51 @@ void dataPrint(void *data)
 	printf("%d ",*(int*)(data) );
 }
 
-void inorder_iterative(BTREE *btree)
+void postorder_iterative_single_stack(BTREE *btree)// Not DOne Properly
 {
-	STACK s;
+	// Base Case
+      
+    STACK s; 
 	initStack(&s, sizeof(int));
-	int curr = 0;
-	while (curr != -1 || s.num_elements != 0) 
+	int curr = 0; 
+	do
     { 
-        /* Reach the left most Node of the 
-           curr Node */
-        while (curr !=  -1) 
-        {
+        // Move to leftmost node 
+        while (curr != -1) 
+        { 
+            // Push root's right child and then root to stack. 
+           
+            if (CURR_RIGHT != -1)
+    		{ 
+	            int tmp = CURR_RIGHT;
+	            push(&s, &tmp); 
+	        }
             push(&s, &curr); 
-            curr = btree->array[curr]->left;
+  
+            // Set root as root's left child   
+            curr = CURR_LEFT; 
         } 
   
-        /* Current must be NULL at this point */
-       	pop(&s, &curr);
-	  	btree->dataPrint(btree->array[curr]->data);
-
-        /* we have visited the node and its 
-           left subtree.  Now, it's right 
-           subtree's turn */
-		curr = btree->array[curr]->right;
+        // Pop an item from stack and set it as root     
+        pop(&s, &curr);
   
-    }
+        // If the popped item has a right child and the right child is not 
+        // processed yet, then make sure right child is processed before root 
+        int tmp; peek(&s, &tmp);
+        if (CURR_RIGHT != -1 && tmp == CURR_RIGHT) 
+        { 
+                        
+            pop(&s, &tmp);  
+            push(&s, &curr); // push root back to stack 
+            curr = CURR_RIGHT; // change root so that the right  
+                                // child is processed next 
+        } 
+        else  // Else print root's data and set root as NULL 
+        { 
+            btree->dataPrint(btree->array[curr]->data);
+            curr = -1;
+        } 
+    } while (s.num_elements != 0);
 }
 
 int main(int argc, char const *argv[])
@@ -53,11 +73,14 @@ int main(int argc, char const *argv[])
 
 	displayTable(&btree);
 	preorder(&btree, 0);printf("\n");
+	preorder_iteratice(&btree);printf("\n");
+	printf("\n");
 	inorder(&btree, 0);printf("\n");
-	postorder(&btree, 0);printf("\n");
 	inorder_iterative(&btree);printf("\n");
-	
-
-
+	printf("\n");
+	postorder(&btree, 0);printf("\n");
+	postorder_iterative(&btree);printf("\n");
+	printf("\n");
+	postorder_iterative_single_stack(&btree);printf("\n");
 	return 0;
 }

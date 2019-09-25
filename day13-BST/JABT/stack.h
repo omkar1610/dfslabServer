@@ -19,5 +19,7 @@ void push(STACK *s, const void *eptr);
 
 void pop(STACK *s, void *eptr);
 
+void peek(STACK *s, void *eptr);
+
 #endif	//_GSTACK_
 

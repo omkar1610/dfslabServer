@@ -31,3 +31,10 @@ void pop(STACK *s, void *eptr)
 	memmove(eptr, top, s->element_size);
 }
 
+void peek(STACK *s, void *eptr)
+{
+	if(s->num_elements == 0) {printf("ERROR : Underflow\n");return;}
+	void* top = s->elements + (s->num_elements) * s->element_size;
+	memmove(eptr, top, s->element_size);
+}
+
