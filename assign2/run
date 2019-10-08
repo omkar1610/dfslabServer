@@ -1,0 +1,6 @@
+gcc prob1.c
+./a.out
+2 15 8 18
+gcc prob1_new.c
+./a.out
+2 15 8 18
