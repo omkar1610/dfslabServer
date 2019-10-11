@@ -8,11 +8,11 @@
 #define TYPE long long int
 
 
-TYPE ncr(TYPE **data, TYPE n, TYPE r)
+TYPE ncr(TYPE *data, TYPE n, TYPE r)
 {
 	if(n<r) return 0;
-	else if(r>(n>>1)) return data[n][n-r];
-	else return data[n][r];
+	else if(r>(n>>1)) return ncr(data, n, n-r);
+	else return data[n]/(data[r]*data[n-r]);
 }
 
 int main()
@@ -29,22 +29,12 @@ int main()
 		goto exit;
 	}
 
-	TYPE **data = malloc((E+1)*sizeof(TYPE*));
+	TYPE *data = malloc((E+1)*sizeof(TYPE));
+	data[0] = 1;
 	for(int i = 1; i<=E ; i++)
-	{
-		data[i] = malloc(1 + (i>>1)*sizeof(TYPE));
-		data[i][0] = 1; //(n,0) = 1
-	}
+		data[i] = data[i-1]*i;
 
-	// Using this formula to generate the pascal triangle
-	// (n,r) = (n-1, r-1) + (n-1, r)
-	for(int i = 2;i<=E;i++)
-		for(int j = 1; j<=(i>>1);j++)
-			if(i != 2*j)
-				data[i][j] = data[i-1][j-1] + data[i-1][j];
-			else
-				data[i][j] = data[i-1][j-1] + data[i-1][j-1];
-
+	
 	if(n>=(N>>1))
 	{	
 		for(int i = n; i<=N;i++)

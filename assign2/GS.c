@@ -65,7 +65,7 @@ int inversionPairs(int N, int K) {
 	return data[N][K];
 }
 
-int rec(int n, int k)
+int inversionPairs(int n, int k)
 {
 	//printf("n k %d %d\n",n,k );
 	if(k<0) return 0;
@@ -75,14 +75,14 @@ int rec(int n, int k)
 	{
 		int sum = 0;
 		for(int i = 0;i<=k;i++)
-			sum = mod(sum + rec(n-1,i));
+			sum = mod(sum + inversionPairs(n-1,i));
 		return sum;
 	}
 	else if(k>=n)
 	{
 		int sum = 0;
 		for(int i = k-n+1;i<=k;i++)
-			sum = mod(sum + rec(n-1,i));
+			sum = mod(sum + inversionPairs(n-1,i));
 		return sum;
 	}
 }
