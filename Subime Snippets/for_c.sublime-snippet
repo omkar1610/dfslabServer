@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+for(${1:int i=0} ; ${2:i<n} ; ${3:i++});
+$0
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<!-- <tabTrigger>hello</tabTrigger> -->
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+	<tabTrigger>FOR</tabTrigger>
+	<scope>source.c</scope>
+</snippet>
