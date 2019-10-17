@@ -1,7 +1,5 @@
 #include "LL_alternate.h"
 
-
-
 int main()
 {
 	LL ll;
@@ -16,5 +14,5 @@ int main()
 	delete_data(&ll, 13);
 
 	showll(&ll);
-	
+		
 }
