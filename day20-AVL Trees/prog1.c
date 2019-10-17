@@ -3,8 +3,9 @@
 
 int main()
 {
-	int SIZE = 3;
-	double MATRIX[][3] = {
-	#include "mat.txt"
-	};
+	#ifdef DEBUG
+        printf("Deleting recursively from left subtree \n");
+ 	#endif 
+      printf("Just\n");
+	
 }
