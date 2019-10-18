@@ -24,9 +24,15 @@ void prog(char *a, char *b, char *n1, char *n2, float prob)
 	int i = 0, j = 0;
 	size_t la = strlen(a), lb = strlen(b), ln1 = strlen(n1), ln2 = strlen(n2);
 	// printf("%lu %lu %lu %lu\n", la,lb,ln1,ln2);
+	//Parent and child are same
+	if(first_same(a,n1)==la && first_same(b,n2)== lb) 
+        { 
+                printf("%lu %lu\n",la,lb);
+                 return ;
+        }
 
 	//If sum of parent and child length are not same or no probability of cross over
-	if(la+lb != ln1+ln2 || prob == 0)
+	else if(la+lb != ln1+ln2 || prob == 0)
 	{
 		printf("INFEASIBLE\n");
 		return;
