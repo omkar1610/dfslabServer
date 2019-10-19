@@ -16,3 +16,9 @@ out in Weiss (4 ed., Section 4.4) (insertion and deletion).
 * Fix `print_tree().` `print_pstree()` works fine, but you need xelatex to
   compile and view the resultant pdf file that contains pictures of the
   tree.
+
+
+
+# Instr
+
+* Copy the output of driver and paste in tree.tex and then run overleaf with XeLatex compiler

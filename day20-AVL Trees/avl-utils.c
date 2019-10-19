@@ -1,7 +1,7 @@
 #include "common.h"
 #include "avl.h"
 
-int grow_tree(TREE *tree) {
+int grow_tree(AVL_TREE *tree) {
     int i;
     assert(tree != NULL &&
            tree->num_nodes == tree->max_nodes &&
@@ -19,7 +19,7 @@ int grow_tree(TREE *tree) {
     return 0;
 }
 
-int get_new_node(TREE *tree) {
+int get_new_node(AVL_TREE *tree) {
     int newnode;
     if (tree->free_list == -1 &&
         FAILURE == grow_tree(tree))
@@ -29,7 +29,7 @@ int get_new_node(TREE *tree) {
     return newnode;
 }
 
-void free_up_node(TREE *tree, int index) {
+void free_up_node(AVL_TREE *tree, int index) {
     tree->nodelist[index].left = tree->free_list;
     /* tree->nodelist[index].right = tree->nodelist[index].parent = -1; */
     /* tree->nodelist[index].height = 0; */
@@ -37,7 +37,7 @@ void free_up_node(TREE *tree, int index) {
     return;
 }
 
-int find_successor(TREE *tree, int node) {
+int find_successor(AVL_TREE *tree, int node) {
     int child;
     assert(node != -1);
     /* Go to right child, then as far left as possible */
@@ -62,7 +62,7 @@ int find_successor(TREE *tree, int node) {
     return child;
 }
 
-void rotate_on_insert_LL(TREE *tree, int parent, int *node) {
+void rotate_on_insert_LL(AVL_TREE *tree, int parent, int *node) {
     /* See Weiss, DS & AA in C++, 4 ed., Section 4.4.1, Figure 4.34 */
  #ifdef DEBUG
         printf("LL (right) rotation at %d\n", tree->nodelist[*node].data);
@@ -90,7 +90,7 @@ void rotate_on_insert_LL(TREE *tree, int parent, int *node) {
     return;
 }
 
-void rotate_on_insert_RR(TREE *tree, int parent, int *node) {
+void rotate_on_insert_RR(AVL_TREE *tree, int parent, int *node) {
     /* See Weiss, DS & AA in C++, 4 ed., Section 4.4.1, Figure 4.36 */
  #ifdef DEBUG
         printf("RR (left) rotation at %d\n", tree->nodelist[*node].data);
@@ -117,7 +117,7 @@ void rotate_on_insert_RR(TREE *tree, int parent, int *node) {
     return;
 }
 
-void rotate_on_insert_LR(TREE *tree, int parent, int *node) {
+void rotate_on_insert_LR(AVL_TREE *tree, int parent, int *node) {
     /* See Weiss, DS & AA in C++, 4 ed., Section 4.4.2, Figure 4.38 */
  #ifdef DEBUG
         printf("LR (double) rotation at %d\n", tree->nodelist[*node].data);
@@ -147,7 +147,7 @@ void rotate_on_insert_LR(TREE *tree, int parent, int *node) {
     return;
 }
 
-void rotate_on_insert_RL(TREE *tree, int parent, int *node) {
+void rotate_on_insert_RL(AVL_TREE *tree, int parent, int *node) {
     /* See CMSC 420 Lecture Notes by David M. Mount, UMCP, pg. 39. */
  #ifdef DEBUG
         printf("RL (double) rotation at %d\n", tree->nodelist[*node].data);
@@ -158,7 +158,7 @@ void rotate_on_insert_RL(TREE *tree, int parent, int *node) {
     return;
 }
 
-void balance(TREE *tree, int parent, int *node) {
+void balance(AVL_TREE *tree, int parent, int *node) {
     int thisnode = *node;
     int left = tree->nodelist[thisnode].left;
     int right = tree->nodelist[thisnode].right;
@@ -191,7 +191,7 @@ void balance(TREE *tree, int parent, int *node) {
     return;
 }
 
-void inorder(TREE *tree, int root) {
+void inorder(AVL_TREE *tree, int root) {
     if (root == -1)
         return;
     inorder(tree, tree->nodelist[root].left);
@@ -201,7 +201,7 @@ void inorder(TREE *tree, int root) {
 }
 
 #if 0
-void print_tree(TREE *tree, int root, int indent) {
+void print_tree(AVL_TREE *tree, int root, int indent) {
     int i;
     if (root == -1)
         return;
@@ -225,7 +225,7 @@ void print_tree(TREE *tree, int root, int indent) {
 }
 #endif
 
-void print_pstree(TREE *tree, int root) {
+void print_pstree(AVL_TREE *tree, int root) {
     if (root != -1) {
         fprintf(stderr, "\\pstree{\\TCircle[radius=1.0]{%d,%d}}{\n",
                 tree->nodelist[root].data, tree->nodelist[root].height);
@@ -238,3 +238,4 @@ void print_pstree(TREE *tree, int root) {
 
     return;
 }
+

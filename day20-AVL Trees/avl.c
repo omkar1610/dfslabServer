@@ -1,7 +1,7 @@
 #include "common.h"
 #include "avl.h"
 
-int init_tree(TREE *tree) {
+int init_tree(AVL_TREE *tree) {
     int i;
     assert(tree != NULL);
     tree->num_nodes = 0;
@@ -18,7 +18,7 @@ int init_tree(TREE *tree) {
     return 0;
 }
 
-int search(TREE *tree, int root, DATA d) {
+int search(AVL_TREE *tree, int root, DATA d) {
     if (root == -1) 
         return -1;
     if (d < tree->nodelist[root].data) 
@@ -29,7 +29,7 @@ int search(TREE *tree, int root, DATA d) {
         return root;
 }
 
-int insert(TREE *tree, int parent, int *root, DATA d) {
+int insert(AVL_TREE *tree, int parent, int *root, DATA d) {
     int newnode, thisnode = *root;
     if (thisnode == -1) {
         /* INSERT HERE */
@@ -54,7 +54,7 @@ int insert(TREE *tree, int parent, int *root, DATA d) {
     return 0;
 }
 
-int delete(TREE *tree, int parent, int *root, DATA d) {
+int delete(AVL_TREE *tree, int parent, int *root, DATA d) {
     int thisnode = *root;
     if (thisnode == -1)
         return 0;
