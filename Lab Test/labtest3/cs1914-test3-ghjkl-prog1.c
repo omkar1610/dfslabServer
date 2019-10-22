@@ -24,7 +24,7 @@ int main()
 	if(w<min) min = w;
 	if(r<min) min = r;
 
-	for (i = 0; i*i<=min; ++i) ;
+	for (i = 0; i*i<=min; ++i) ; //checking nearest square number
 	// printf("%d\n", i-1);
 	int freq = i-1;
 	for (int j = 0; j < freq; ++j)
