@@ -1,7 +1,11 @@
 #include "common.h"
 #include "avl.h"
 
-//This generates the tree.tex data to be stored in the file for the pdf output
+void showTable(AVL_TREE *tree)
+{
+    
+}
+
 
 int main(int ac, char *av[])
 {
