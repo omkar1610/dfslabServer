@@ -1,7 +1,3 @@
-1 read(A)
-2 A = A - 10
-3 write(A)
-8 read(B)
-9 B = B + 10
-10 write(B)
-11 commit
+2
+2 write(A)
+3 read(B)
