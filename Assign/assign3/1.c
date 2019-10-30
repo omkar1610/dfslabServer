@@ -22,9 +22,23 @@ int main(int argc, char *a[])
             while(j<argc && strcmp(a[i],a[j])==0)
                 j++;
             if(j<argc)
+            {
                 SWAP(j, i+1);
+            }
+            else
+            {
+                j = i-2;
+                while(j>=0 && strcmp(a[i], a[j]) == 0 && (j<1 || strcmp(a[j], a[j-1]) != 1))
+                    j--;
+                if(j>=0)
+                    SWAP(j, i+1);
+            }
 
+            for (int k = 1; k < argc; ++k)
+        printf("%s ", a[k]);
+    printf("\n");
         }
+        
 
     }
 
