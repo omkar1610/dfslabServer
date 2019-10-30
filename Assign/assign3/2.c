@@ -17,37 +17,15 @@ int isPrime(int n)
 int main()
 {
 	int n; scanf("%d", &n);
-	int data[n];
-	for (int i = 0; i < n; ++i) scanf("%d", &data[i]);
-
-	char *str; int count = 0;
+	int product_poly[n+1];
+	for (int i = 0; i <= n; ++i) scanf("%d", &product_poly[i]);
 	getchar();
+	// for (int i = 0; i <= n; ++i) printf("%d ", product_poly[i]);
+
+	char *str; int ele_S = 0;
+	// getchar();
 
 	scanf("%m[^\n]",&str);
-	for (int i = 0; i < strlen(str); ++i) if(str[i] == ' ') count++;
-
-
-	int *coeff = malloc(count * sizeof(int));
-
-	int i = 0, tmp = atoi(strtok(str," "));
-
-	if(isPrime(tmp))coeff[i++] = tmp;
+	printf("~%s~\n", str);
 	
-
-	while(i < count-1)
-	{
-		tmp = atoi(strtok(NULL, " "));
-		printf("%d ", tmp);
-		if(isPrime(tmp)) coeff[i++] = tmp;
-	}
-
-
-
-
-
-
-	for (int i = 0; i < count; ++i)
-	{
-		printf("%d ", coeff[i]);
-	}
 }

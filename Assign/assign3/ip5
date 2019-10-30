@@ -1,0 +1,9 @@
+8
+4 read(A)
+5 T = A * 0.05
+6 A = - T
+7 write(A)
+12 read(B)
+13 B = B + T
+14 write(B)
+15 commit

@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include<string.h>
 
+typedef struct
+{
+	char c;
+	int t_no;
+}OP_LIST;
+
+typedef struct
+{
+	char *var;
+	OP_LIST *oper;
+}VAR_LIST;
 
 typedef struct
 {
@@ -72,7 +83,7 @@ int main(int argc, char const *argv[])
 		the structure of the file given in the document must be followed i.e line_number<space>operation\n \
 		The read/write operation must be written in the format given in the question i.e read<open bracket><variable name><Close bracket>\n\n");
 
-	int tot_line_size = 100;
+	int tot_line_size = 1000;
 	TOT_FILE *tot_file = malloc(tot_line_size * sizeof(TOT_FILE));
 	int line = 0;
 
