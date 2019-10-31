@@ -19,7 +19,7 @@ int comp_struct(const void *t1, const void *t2)
 }
 
 
-int isCyclicUtil(int **mat, int argc, int v, int *visited, int *recStack) 
+int checkCycle(int **mat, int argc, int v, int *visited, int *recStack) 
 { 
     if(visited[v] == 0) 
     { 
@@ -32,7 +32,7 @@ int isCyclicUtil(int **mat, int argc, int v, int *visited, int *recStack)
         { 
         	if(mat[v][i] == 1)
         	{
-		        if ( !visited[i] && isCyclicUtil(mat, argc, i, visited, recStack) ) 
+		        if ( !visited[i] && checkCycle(mat, argc, i, visited, recStack) ) 
 		            return 1; 
 		        else if (recStack[i]) 
 		            return 1; 
@@ -44,7 +44,7 @@ int isCyclicUtil(int **mat, int argc, int v, int *visited, int *recStack)
     return 0; 
 } 
 
-int isCyclic(int **mat, int argc) 
+int cyclic(int **mat, int argc) 
 { 
     // Mark all the vertices as not visited and not part of recursion 
     // stack 
@@ -59,7 +59,7 @@ int isCyclic(int **mat, int argc)
     // Call the recursive helper function to detect cycle in different 
     // DFS trees 
     for(int i = 1; i < argc; i++) 
-        if (/*printf("v %d\n", i) &&*/ isCyclicUtil(mat, argc, i, visited, recStack)) 
+        if (/*printf("v %d\n", i) &&*/ checkCycle(mat, argc, i, visited, recStack)) 
             return 1; 
   
     return 0; 
@@ -158,7 +158,7 @@ int main(int argc, char const *argv[])
 	// 		printf("%d ", mat_adj[i][j]);
 
 
-	printf(isCyclic(mat_adj, argc)==1?"Not Conflict Serializable\n":"Conflict Serializable\n");
+	printf(cyclic(mat_adj, argc)==1?"Not Conflict Serializable\n":"Conflict Serializable\n");
 
 	return 0;
 }

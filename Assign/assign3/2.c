@@ -65,6 +65,12 @@ int main()
 		tmp = strtok(NULL, " ");
 	}while(tmp != NULL);
 
+	if(ele_S<2*n)
+	{
+		printf("False\n");
+		return 0;
+	}
+
 	for (int i = 0; i < n; ++i)
 	{
 		int number = product_poly[i];
