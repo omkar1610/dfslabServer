@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "common.h"
 
 #ifndef BT_H
 #define BT_H
@@ -26,34 +25,6 @@ typedef struct
     BT_NODE *nodelist;
 }BT_TREE;
 
-void init_btree(BT_TREE *tree) 
-{
-    int i;
-
-    NUM_ELE = 0;
-    MAX_ELE = 5;
-    NL = Malloc(MAX_ELE, BT_NODE);    
-    ROOT = -1;
-    FREE = 0;
-    
-    for (i = 0; i < MAX_ELE; i++) {
-        NL[i].left = i+1;
-        NL[i].right = -1;
-    }
-    NL[i-1].left = -1;
-}
-
-void display(BT_TREE *tree)
-{
-    printf("TREE\n");
-    for (int i = 0; i < MAX_ELE; ++i)
-        printf("%d %d %d %d\n", i, NL[i].data, NL[i].left, NL[i].right);
-    // printf("FREE\n");
-    // for (int i = FREE; i != -1  ; i = NL[i].left)
-    // {
-    //     printf("%d %d %d %d\n", i, NL[i].data, NL[i].left, NL[i].right);
-    // }
-}
 
 void __insert(BT_TREE *tree, int node, int key)
 {
@@ -91,39 +62,6 @@ void __insert(BT_TREE *tree, int node, int key)
     }
 }
 
-
-
-void insert(BT_TREE *tree, int key)
-{
-    if(ROOT == -1) //Empty Tree
-    {
-        ROOT = FREE;
-        FREE = NL[FREE].left;
-
-        NL[ROOT].data = key;
-        NL[ROOT].left = -1;
-        NUM_ELE++;
-    }
-    else
-    {
-        //If full tree then reallocate and then recurse
-        if(FREE == -1)
-        {
-            int i;
-            FREE = MAX_ELE;
-            MAX_ELE *= 2;
-            NL = realloc(NL, MAX_ELE * sizeof(BT_NODE));
-            for (i = FREE; i < MAX_ELE; ++i)
-            {
-                NL[i].left = i+1;
-                NL[i].right = -1;
-            }
-            NL[i-1].left = -1;
-        }
-        __insert(tree, ROOT, key); //Recursive function
-    }
-}
-
 int __search(BT_TREE *tree, int node, int key)
 {
     // -1 if not found
@@ -138,12 +76,6 @@ int __search(BT_TREE *tree, int node, int key)
    }
    else
     return -1;
-}
-
-int search(BT_TREE *tree, int key)
-{
- 
-    return __search(tree, ROOT, key);
 }
 
 int __parent_search(BT_TREE *tree, int node, int key)
@@ -178,17 +110,6 @@ int __parent_search(BT_TREE *tree, int node, int key)
         return -2;
 }
 
-int parent_search(BT_TREE *tree, int key)
-{
-    //returns -2 if not found the key, -1 if the root has the key, else the index of the parent
-    if(ROOT == -1)
-        return -2;
-    else if(NL[ROOT].data == key)
-        return -1;
-    else
-        return __parent_search(tree, ROOT, key);
-}
-
 int __child_no(BT_TREE *tree, int node)
 {
     //Get how many children for delete purpose
@@ -202,7 +123,6 @@ int __child_no(BT_TREE *tree, int node)
             return 2;
 }
 
-
 void __delete_leaf(BT_TREE *tree, int parent, int node)
 {
     //left child    
@@ -214,6 +134,7 @@ void __delete_leaf(BT_TREE *tree, int parent, int node)
 
     NL[node].left = FREE; NL[node].data = 0;//Changing data is not needed
     FREE = node;
+    NUM_ELE--;
 }
 
 void __delete_single_child(BT_TREE *tree, int parent, int node)
@@ -228,6 +149,7 @@ void __delete_single_child(BT_TREE *tree, int parent, int node)
 
     NL[node].left = FREE; NL[node].left = -1; NL[node].data = 0;//Changing data is not needed
     FREE = node;
+    NUM_ELE--;
 }
 
 void __delete_double_child(BT_TREE *tree, int parent, int node)
@@ -244,50 +166,70 @@ void __delete_double_child(BT_TREE *tree, int parent, int node)
         successor = NL[successor].left;
     }
 
+    //replace the value
     NL[node].data = NL[successor].data;
 
     //delete the successor
     int node_to_delete = successor;
     parent = par_succ;
-    //Either 0 child or 1 child
 
-    if(__child_no(tree, node_to_delete) == 0)
+    //Either 0 child or 1 child //No left child for sure
+
+    if(NL[node_to_delete].right == -1)
         __delete_leaf(tree, parent, node_to_delete);
     else
         __delete_single_child(tree, parent, node_to_delete);
 }
 
-
-void remove_element(BT_TREE *tree, int key)
+void __delete_root(BT_TREE *tree)
 {
-    int parent = parent_search(tree, key);
-    if(parent == -2)
-        printf("NOT PRESENT TO DELETE\n");
-    else if(parent == -1)
+    int child_no = __child_no(tree, ROOT);
+    if(child_no == 0)
     {
-        //delete root
+        NL[ROOT].left = FREE;
+        FREE = ROOT;
+        ROOT = -1;
+        NUM_ELE--;
+    }
+
+    else if(child_no == 1)
+    {
+        //left child exists
+        int tmp = ROOT;
+        if(NL[ROOT].left != -1)
+            ROOT = NL[ROOT].left;
+        //right child
+        else
+            ROOT = NL[ROOT].right;
+
+        NL[tmp].left = FREE;
+        FREE = tmp;
+        NUM_ELE--;
     }
     else
     {
-        //Left or right child of the parent
-        int left = NL[parent].left, right = NL[parent].right;
-        int node_to_delete;
+        int par_succ = ROOT;
+        int successor = NL[ROOT].right;
+        while(NL[successor].left != -1)
+        {
+            par_succ = successor;
+            successor = NL[successor].left;
+        }
 
-        if(NL[left].data == key)
-            node_to_delete = NL[parent].left;
-        else
-            node_to_delete = NL[parent].right;
+        NL[ROOT].data = NL[successor].data;
 
-        //How many child of the node to delte
-        int child_no = __child_no(tree, node_to_delete);
-        if(child_no == 0)
+        //delete the successor
+        int node_to_delete = successor;
+        int parent = par_succ;
+
+        //Either 0 child or 1 child
+
+        if(__child_no(tree, node_to_delete) == 0)
             __delete_leaf(tree, parent, node_to_delete);
-        else if(child_no == 1)
-            __delete_single_child(tree, parent, node_to_delete);
         else
-            __delete_double_child(tree, parent, node_to_delete);
+            __delete_single_child(tree, parent, node_to_delete);
     }
-
 }
+
 
 #endif
