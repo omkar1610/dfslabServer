@@ -1,11 +1,15 @@
 #include "common.h"
 #include "trie.h"
 
+
+char START_CHAR_DFS = 'a';
+
 unsigned long max_nodes, num_nodes;
 TRIE_NODE *trie;
 
-int init_trie()
+int init_trie(char start_char)
 {
+    START_CHAR_DFS = start_char;
     max_nodes = 10000;
     if (NULL == (trie = (TRIE_NODE *) calloc(max_nodes, sizeof(TRIE_NODE))))
         ERR_MESG("init-trie: out of memory\n");
@@ -47,7 +51,36 @@ int insert_string(char *s)
             }                
         }
         else
-            fprintf(stderr, "Unexpected character %d\n", c);
+            fprintf(stderr, "Unexpected character %c\n", c);
+        s++;
+    }
+    trie[index][NUM_SYMS]++;
+
+    return 0;
+}
+
+
+int insert_number(char *s)
+{
+    unsigned int index = 0;
+    int c, new_index;
+
+    while (*s) {
+        c = *s;
+        if (c >= '0' && c <= '9') {
+            c = c - '0';
+            if (trie[index][c] != 0)
+                /* just follow the pointer */
+                index = trie[index][c];
+            else {
+                /* need new node */
+                if (UNDEF == (new_index = insert_node()))
+                    return UNDEF;
+                index = trie[index][c] = new_index;
+            }                
+        }
+        else
+            fprintf(stderr, "Unexpected character %c\n", c);
         s++;
     }
     trie[index][NUM_SYMS]++;
@@ -93,7 +126,7 @@ int trie_dfs()
         for (i = NUM_SYMS - 1; i >= 0; i--) {
             if (trie[index][i] > 0) {
                 sptr = stack + top;
-                sptr->c = 'a' + i;
+                sptr->c = START_CHAR_DFS + i;
                 sptr->index = trie[index][i];
                 sptr->level = level + 1;
                 top++;

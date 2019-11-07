@@ -11,6 +11,6 @@ typedef unsigned long int TRIE_NODE[NUM_SYMS + 1]; /* the last field stores how
 extern unsigned long max_nodes, num_nodes;
 extern TRIE_NODE *trie;
 
-extern int init_trie(), insert_node(), insert_string(), trie_dfs();
+extern int init_trie(char start), insert_node(), insert_string(), insert_number(), trie_dfs();
 
 #endif // TRIE_H
