@@ -9,7 +9,7 @@ int main(int ac, char *av[])
     BT_TREE tree;
     init_btree(&tree);
 
-    char op[1] = "+"; int tmp;
+    char op[1] = "q"; int tmp;
     //add remove inorder display_table
     while(op[0] != 'q')
     {
@@ -41,6 +41,14 @@ int main(int ac, char *av[])
 
         fflush(stdin);
     }
+
+    for (int i = 0; i < 20; ++i)
+        insert(&tree, (rand()%100));
+    
+    inorder(&tree, tree.root);printf("\n");
+
+    display(&tree);
+    printf("Height %d\n", height(&tree));
 
     return 0;
 }

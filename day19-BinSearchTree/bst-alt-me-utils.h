@@ -9,10 +9,10 @@ void init_btree(BT_TREE *tree)
     int i;
 
     NUM_ELE = 0;
-    MAX_ELE = 100;
+    MAX_ELE = 25;
     NL = malloc(MAX_ELE * sizeof(BT_NODE));   
     ROOT = -1;
-    FREE = 0;
+		FREE = 0;
     
     for (i = 0; i < MAX_ELE; i++) {
         NL[i].left = i+1;
@@ -38,9 +38,7 @@ void display(BT_TREE *tree)
         printf("%d %d %d %d\n", i, NL[i].data, NL[i].left, NL[i].right);
     // printf("FREE\n");
     // for (int i = FREE; i != -1  ; i = NL[i].left)
-    // {
     //     printf("%d %d %d %d\n", i, NL[i].data, NL[i].left, NL[i].right);
-    // }
 }
 
 void insert(BT_TREE *tree, int key)
@@ -122,6 +120,13 @@ void remove_element(BT_TREE *tree, int key)
             __delete_double_child(tree, parent, node_to_delete);
     }
 
+}
+
+
+
+int height(BT_TREE *tree)
+{
+	__height(tree, ROOT);
 }
 
 #endif

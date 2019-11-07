@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+#ifndef MAX
+#define MAX(a,b) (((a)>(b))?(a):(b))
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#endif
+
+
 #ifndef BT_H
 #define BT_H
 
@@ -9,6 +16,7 @@
 #define NUM_ELE tree->num_ele
 #define MAX_ELE tree->max_ele
 #define NL tree->nodelist
+
 
 typedef int DATA;
 
@@ -231,5 +239,13 @@ void __delete_root(BT_TREE *tree)
     }
 }
 
+
+int __height(BT_TREE *tree, int node)
+{
+    if(node != -1)
+        return 1 + MAX(__height(tree, NL[node].left), __height(tree, NL[node].right));
+    else
+        return 0;
+}
 
 #endif
