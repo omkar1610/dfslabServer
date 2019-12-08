@@ -24,10 +24,11 @@ def func_old(ip, op):
 
 def func(ip, op):
 	with open(ip) as f:
-	    data = re.split('([^a-zA-Z0-9\n]+)',f.read())
+	    data = re.split('([^a-zA-Z0-9\n]+)',f.read())  ## Make a list separating the delimeters and data
 	f.close()
 
 	table = {}
+	## Count the freq of each delim
 	for ele in data:
 	    if not re.match('^[a-zA-Z0-9]',ele):
 	        if ele in table:
@@ -36,14 +37,16 @@ def func(ip, op):
 	            table[ele] = 1
 	#print(table)
 
-	mx_ele = max(table, key=table.get)
-	count = table[mx_ele]
+	## Check if One max or Confusion
+	max_delim = max(table, key=table.get)
+	count = table[max_delim]
 
-	del table[mx_ele]
+	del table[max_delim]
 	if count == table[max(table, key=table.get)]:
 	    print("CONFUSING")
 	else:
-	    out_data = [mx_ele if not re.match('^[a-zA-Z0-9]',ele) else ele for ele in data]
+		## Replace all the delims with appropriate max_delim
+	    out_data = [max_delim if not re.match('^[a-zA-Z0-9]',ele) else ele for ele in data]
 	    with open(op,"w") as f:
 	        f.write("".join(out_data))
 	    f.close()
