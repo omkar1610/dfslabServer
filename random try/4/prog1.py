@@ -30,7 +30,7 @@ def func(ip, op):
 	    with open(op,"w") as f:
 	        f.write("".join(out_data))
 	    f.close()
-	    print("".join(out_data))
+	    #print("".join(out_data))
 
 
 if __name__ == "__main__":
