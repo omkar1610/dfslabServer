@@ -1,0 +1,5 @@
+4
+1 read(A)
+2 write(A)
+7 read(B)
+8 write(B)

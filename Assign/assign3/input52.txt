@@ -1,0 +1,7 @@
+6
+3 read(A)
+4 A = 0.2*A
+5 write(A)
+6 read(B)
+11 B = B+A
+12 write(B)

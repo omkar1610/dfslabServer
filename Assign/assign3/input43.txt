@@ -1,0 +1,3 @@
+2
+3 read(A)
+6 read(B)

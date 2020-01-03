@@ -1,0 +1,4 @@
+3
+1 read(X)
+4 write(Y)
+5 read(Z)
